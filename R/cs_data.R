@@ -18,6 +18,10 @@ cs_get_data <- function(file=NULL, project=NULL) {
     data <- read.csv(file)
     .validate_cs_data(data, project=project)
 
+    if (.func_exists(project, "factor_recode")) {
+      data <- .func_call(project, "factor_recode", data)
+    }
+
     for (i in 1:length(.cs_data_cols())) {
       if (class(data[[i]]) != .cs_data_cols()[[i]]) {
         if (.cs_data_cols()[[i]] == "POSIXct") {

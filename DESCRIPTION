@@ -5,15 +5,19 @@ Version: 0.1.0
 Authors@R: c(
     person("Ed", "Baker", email = "ed@ebaker.me.uk", role = c("aut", "cre"))
     )
-Description: Interface to the Natural History Museum Data Ecosystem. Functions
-    to process data exports for analysis.
+Description: Interface to the Natural History Museum Data Ecosystem. This 
+    package preprocesses data for analysis by providing some sane defaults to
+    data types, factor names, and the order of factors.
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 Imports:
+    forcats,
     methods
 Suggests: 
+    spelling,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
+Language: en-GB
