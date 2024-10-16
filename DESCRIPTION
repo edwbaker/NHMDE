@@ -1,0 +1,19 @@
+Package: NHMDE
+Type: Package
+Title: Natural History Museum Data Ecosystem
+Version: 0.1.0
+Authors@R: c(
+    person("Ed", "Baker", email = "ed@ebaker.me.uk", role = c("aut", "cre"))
+    )
+Description: Interface to the Natural History Museum Data Ecosystem. Functions
+    to process data exports for analysis.
+License: GPL (>= 3)
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+Imports:
+    methods
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3

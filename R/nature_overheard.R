@@ -1,0 +1,30 @@
+.natureoverheard_data_cols <- function(data) {
+  return(list(
+    "identification_experience" = "factor",
+    "road_type" = "factor",
+    "distance_from_road" = "factor",
+    "habitat_features" = "character",
+    "temperature" = "numeric",
+    "cloud_cover" = "factor",
+    "sun_or_shade" = "factor",
+    "device_used" = "factor",
+    "device_brand" = "factor",
+    "other_device_info" = "character",
+    "additional_device_info" = "character",
+    "distance_from_device" = "factor",
+    "audio_submission" = "logical",
+    "sample_location_latitude" = "numeric",
+    "sample_location_longitude" = "numeric",
+    "sample_location_county" = "factor",
+    "verification_completion_status" = "factor",
+    "apocrita" = "numeric",
+    "coleoptera" = "numeric",
+    "diptera" = "numeric",
+    "formicidae" = "numeric",
+    "hemiptera" = "numeric",
+    "lepidoptera" = "numeric",
+    "orthoptera" = "numeric",
+    "syrphidae" = "numeric",
+    "other" = "numeric"
+  ))
+}
