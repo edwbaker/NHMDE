@@ -32,6 +32,10 @@ cs_get_data <- function(file=NULL, project=NULL) {
       }
     }
 
+    if (.func_exists(project, "manipulate_cols")) {
+      data <- .func_call(project, "manipulate_cols", data)
+    }
+
     return(data)
   }
   stop("File must be specified.")

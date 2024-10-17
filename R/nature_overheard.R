@@ -153,3 +153,26 @@
   )
   return(data)
 }
+
+.natureoverheard_manipulate_cols <- function(data) {
+  habitat_cols <- t(as.data.frame(lapply(data$habitat_features, .nature_overheard_hf),col.names=NULL, row.names=paste0("habitat_feature_", .natureoverheard_hf_features())))
+  rownames(habitat_cols) <- NULL
+  habitat_col = which(colnames(data) == "habitat_features")
+  data <- cbind(data[,1:habitat_col], habitat_cols, data[,(habitat_col+1):ncol(data)])
+  return(data)
+}
+
+#' Habitat features in the Nature Overheard dataset
+#'
+#' @return A character vector of habitat features
+#' @export
+.natureoverheard_hf_features <- function() {
+  features <- c("Trees", "Shrubs", "Hedgerow", "Mown lawn", "Wildflowers", "Garden plants")
+  return(features)
+}
+
+.nature_overheard_hf <- function(row) {
+  hf <- .natureoverheard_hf_features()
+  return(hf %in% unlist(strsplit(row, split=",")))
+}
+
