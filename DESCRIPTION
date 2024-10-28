@@ -15,7 +15,9 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 Imports:
     forcats,
-    methods
+    methods,
+    rjson,
+    tidyjson
 Suggests: 
     spelling,
     testthat (>= 3.0.0)
