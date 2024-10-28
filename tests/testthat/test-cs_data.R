@@ -10,5 +10,4 @@ test_that("cs_data rejects invalid input", {
 
   f <- system.file("extdata/cs_data_malformed.csv", package="NHMDE")
   expect_error(cs_get_data(file=f, project=NULL), "Data does not have expected columns.")
-
 })
