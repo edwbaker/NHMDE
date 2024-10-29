@@ -81,6 +81,7 @@ flytunes_process_zooniverse <- function(data) {
   if (length(json) >  1) {
     data <- t(sapply(json, .flytunes_annotations))
     rownames(data) <- NULL
+    colnames(data) <- .flytunes_list_annotations()
     return(as.data.frame(data))
   }
   task <- rjson::fromJSON(json)[[1]]
@@ -96,7 +97,9 @@ flytunes_process_zooniverse <- function(data) {
       }
     }
   }
-  return(t(as.data.frame(ret)))
+  ret <- t(as.data.frame(ret))
+
+  return(ret)
 }
 
 .flytunes_list_annotations <- function() {
@@ -110,3 +113,14 @@ flytunes_process_zooniverse <- function(data) {
   ))
 }
 
+#' Short names for FlyTunes categories
+#' @return A character vector of short names
+#' @export
+flytunes_short_names <- function() {
+  return(c("Road vehicles",
+  "Other transport",
+  "Birds",
+  "Insects",
+  "Humans",
+  "Other\nDon't know"))
+}

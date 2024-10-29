@@ -3,6 +3,7 @@
 export(.natureoverheard_hf_features)
 export(cs_get_data)
 export(flytunes_process_zooniverse)
+export(flytunes_short_names)
 importFrom(forcats,fct_recode)
 importFrom(forcats,fct_relevel)
 importFrom(methods,as)

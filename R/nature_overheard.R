@@ -31,7 +31,7 @@
 
 #' @importFrom forcats fct_recode fct_relevel
 .natureoverheard_factor_recode <- function(data) {
-  data$identification_experience <- fct_recode(data$identification_experience,
+  data$identification_experience <- fct_recode(as.factor(data$identification_experience),
     "No Response" = "",
     "ID Some Wildlife" = "I am familiar with identifying some wildlife (eg, birds or butterflies), but not most insects",
     "ID Insect Groups" = "I am familiar with recognising the main groups of insects",
@@ -80,7 +80,7 @@
     "Half cloud" = "Half clear and half cloud",
     "Clear" =  "All or mostly clear",
     "Cloudy" = "All or mostly cloud",
-    "Not recorded" = "I didn’t record this"
+    "Not recorded" = "I didn\u2019t record this"
   )
   data$cloud_cover <- fct_relevel(data$cloud_cover,
     "Clear",
@@ -94,7 +94,7 @@
     "Shade" = "Entirely shaded",
     "Part shade" ="Partly in sun and partly shaded",
     "Sun" = "Entirely in sunshine",
-    "Not recorded" = "I didn’t record this"
+    "Not recorded" = "I didn\u2019t record this"
   )
   data$sun_or_shade <- fct_relevel(data$sun_or_shade,
     "Sun",
