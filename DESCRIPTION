@@ -17,6 +17,7 @@ Imports:
     forcats,
     methods,
     rjson,
+    sonicscrewdriver,
     tidyjson
 Suggests: 
     spelling,

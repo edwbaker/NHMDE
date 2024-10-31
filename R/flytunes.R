@@ -1,6 +1,6 @@
 #' Process FlyTunes export from Zooniverse
 #'
-#' @param data A data frame from read.csv of classifaction csv
+#' @param data A data frame from read.csv of classification csv
 #' @return A data frame with processed data
 #' @importFrom tidyjson spread_all
 #' @export
@@ -23,6 +23,10 @@ flytunes_process_zooniverse <- function(data) {
     annotations,
     subject_data
   )
+
+  data$segment.number <- as.numeric(data$segment.number)
+  data$subject.offset <- as.numeric(data$subject.offset)
+  data$segment.length <- as.numeric(data$segment.length)
 
   return(data)
 }
@@ -123,4 +127,36 @@ flytunes_short_names <- function() {
   "Insects",
   "Humans",
   "Other\nDon't know"))
+}
+
+#' Get sonicscrewdriver annotation objects from FlyTunes data
+#'
+#' @param data A data frame from `flytunes_process_zooniverse()`
+#' @return A list of sonicscrewdriver annotation objects
+#' @export
+#' @importFrom sonicscrewdriver annotation
+flytunes_annotations <- function(data) {
+  n_max <- sum(colSums(data[, colnames(data) %in% .flytunes_list_annotations()]))
+  n <- 1
+  annotations <- vector(mode="list", length=n_max)
+  for (i in 1:nrow(data)) {
+    for (j in 1:length(.flytunes_list_annotations())) {
+      if (data[i, .flytunes_list_annotations()[j]] == TRUE) {
+        annotations[[n]] <- annotation(
+          file = data$file[i],
+          metadata = list(
+            segment.length = data$segment.length[i],
+            segment.number = data$segment.number[i]
+          ),
+          start = data[i, "segment.number"] * data[i, "segment.length"] + data[i, "subject.offset"],
+          end = (data[i, "segment.number"] + 1) * data[i, "segment.length"] + data[i, "subject.offset"],
+          source = data[i, "user_name"],
+          type = "FlyTunes",
+          value = .flytunes_list_annotations()[j]
+        )
+        n <- n+1
+      }
+    }
+  }
+  return(annotations)
 }
