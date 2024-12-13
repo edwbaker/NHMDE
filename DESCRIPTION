@@ -18,6 +18,7 @@ Imports:
     methods,
     openssl,
     rjson,
+    sonicscrewdriver,
     tidyjson
 Suggests: 
     spelling,
