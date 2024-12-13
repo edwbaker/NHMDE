@@ -176,3 +176,11 @@
   return(hf %in% unlist(strsplit(row, split=",")))
 }
 
+.natureoverheard_data_private <- function() {
+  return(
+    list(
+      "name" = c("first_name", "last_name"),
+      "group" = c("group_name")
+    )
+  )
+}

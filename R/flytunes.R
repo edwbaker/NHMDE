@@ -1,6 +1,6 @@
 #' Process FlyTunes export from Zooniverse
 #'
-#' @param data A data frame from read.csv of classifaction csv
+#' @param data A data frame from read.csv of classification csv
 #' @return A data frame with processed data
 #' @importFrom tidyjson spread_all
 #' @export

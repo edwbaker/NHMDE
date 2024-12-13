@@ -7,7 +7,7 @@
 flytunes_process_zooniverse(data)
 }
 \arguments{
-\item{data}{A data frame from read.csv of classifaction csv}
+\item{data}{A data frame from read.csv of classification csv}
 }
 \value{
 A data frame with processed data
