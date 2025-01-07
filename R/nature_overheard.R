@@ -184,3 +184,11 @@
     )
   )
 }
+
+#' Get list of taxon column names for Nature Overheard
+#'
+#' @return A character vector of taxon column names
+nature_overheard_taxa <- function() {
+  taxa <- c("apocrita", "coleoptera", "diptera", "formicidae", "hemiptera", "lepidoptera", "orthoptera", "syrphidae", "other")
+  return(taxa)
+}
