@@ -220,9 +220,12 @@ nature_overheard_get_verified_samples <- function(samples, verifications) {
 
     samples <- cbind(samples, new_cols)
 
-    pos <- which(colnames(samples) == taxon)
-    new_order <- c(colnames(samples)[1:pos], colnames(new_cols), colnames(samples)[(pos+1):(length(colnames(samples))-length(colnames(new_cols)))])
-    samples <- samples[, new_order]
+    if (i < length(nature_overheard_taxa())) {
+      pos <- which(colnames(samples) == taxon)
+      new_order <- c(colnames(samples)[1:pos], colnames(new_cols), colnames(samples)[(pos+1):(length(colnames(samples))-length(colnames(new_cols)))])
+      samples <- samples[, new_order]
+    }
+
   }
 
   # Fill in the new columns
