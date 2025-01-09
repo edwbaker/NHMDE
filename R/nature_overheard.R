@@ -1,4 +1,4 @@
-.natureoverheard_data_cols <- function(data) {
+.natureoverheard_data_cols <- function() {
   return(list(
     "identification_experience" = "factor",
     "road_type" = "factor",
@@ -26,6 +26,11 @@
     "orthoptera" = "numeric",
     "syrphidae" = "numeric",
     "other" = "numeric"
+  ))
+}
+
+.natureoverheard_verification_cols <- function() {
+  return(list(
   ))
 }
 
@@ -191,4 +196,73 @@
 nature_overheard_taxa <- function() {
   taxa <- c("apocrita", "coleoptera", "diptera", "formicidae", "hemiptera", "lepidoptera", "orthoptera", "syrphidae", "other")
   return(taxa)
+}
+
+#' Summarise verifications into samples table
+#'
+#' @param samples A data frame with samples data
+#' @param verifications A data frame with verifications data
+#' @return A data frame: samples data with the verifications data summarised
+#' @export
+nature_overheard_get_verified_samples <- function(samples, verifications) {
+  verifications$identified_name <- tolower(verifications$identified_name)
+
+  prototype_v <- vector(mode="numeric", length=nrow(samples))
+  prototype_t <- cbind(prototype_v, prototype_v, prototype_v, prototype_v)
+  colnames(prototype_t) <- c("Correct", "Considered_Correct", "Incorrect", "Unable_to_Verify")
+
+  # Generate all the new columns
+  for (i in 1:length(nature_overheard_taxa())) {
+    taxon <- nature_overheard_taxa()[i]
+
+    new_cols <- prototype_t
+    colnames(new_cols) <- paste(taxon, colnames(new_cols), sep="_")
+
+    samples <- cbind(samples, new_cols)
+
+    pos <- which(colnames(samples) == taxon)
+    new_order <- c(colnames(samples)[1:pos], colnames(new_cols), colnames(samples)[(pos+1):(length(colnames(samples))-length(colnames(new_cols)))])
+    samples <- samples[, new_order]
+  }
+
+  # Fill in the new columns
+  for (i in 1:length(samples$sample_id)) {
+    sample_id <- samples$sample_id[i]
+    for (j in 1:length(nature_overheard_taxa())) {
+      taxon <- nature_overheard_taxa()[j]
+
+      temp <- verifications[verifications$sample_id == sample_id & verifications$identified_name == taxon & verifications$level_2_status == "Correct", c("observation_count")]
+      if (length(temp) == 0) {
+        value <- 0
+      } else {
+        value <- sum(as.numeric(temp))
+      }
+      samples[samples$sample_id == sample_id, paste(taxon, "Correct", sep="_")] <- value
+
+      temp <- verifications[verifications$sample_id == sample_id & verifications$identified_name == taxon & verifications$level_2_status == "Considered Correct", c("observation_count")]
+      if (length(temp) == 0) {
+        value <- 0
+      } else {
+        value <- sum(as.numeric(temp))
+      }
+      samples[samples$sample_id == sample_id, paste(taxon, "Considered_Correct", sep="_")] <- value
+
+      temp <- verifications[verifications$sample_id == sample_id & verifications$identified_name == taxon & verifications$level_2_status == "Incorrect", c("observation_count")]
+      if (length(temp) == 0) {
+        value <- 0
+      } else {
+        value <- sum(as.numeric(temp))
+      }
+      samples[samples$sample_id == sample_id, paste(taxon, "Incorrect", sep="_")] <- value
+
+      temp <- verifications[verifications$sample_id == sample_id & verifications$identified_name == taxon & verifications$level_2_status == "Unable to Verify", c("observation_count")]
+      if (length(temp) == 0) {
+        value <- 0
+      } else {
+        value <- sum(as.numeric(temp))
+      }
+      samples[samples$sample_id == sample_id, paste(taxon, "Unable_to_Verify", sep="_")] <- value
+    }
+  }
+  return(samples)
 }

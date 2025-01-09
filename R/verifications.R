@@ -17,12 +17,12 @@ verifications_get_data <- function(file, project=NULL) {
     .validate_verification_data(data, project=project)
 
     if (.func_exists(project, "verification_factor_recode")) {
-      data <- .func_call(project, "verificatio_factor_recode", data)
+      data <- .func_call(project, "verification_factor_recode", data)
     }
 
-    for (i in 1:length(.cs_data_cols())) {
-      if (class(data[[i]]) != .cs_data_cols()[[i]]) {
-        if (.cs_data_cols()[[i]] == "POSIXct") {
+    for (i in 1:length(.verification_cols())) {
+      if (class(data[[i]]) != .verification_cols()[[i]]) {
+        if (.verification_cols()[[i]] == "POSIXct") {
           data[[i]] <- as.POSIXct(data[[i]], format="%d/%m/%Y %H:%M")
         } else {
           data[[i]] <- as(data[[i]], .cs_data_cols(project)[[i]])
@@ -50,17 +50,31 @@ verifications_get_data <- function(file, project=NULL) {
 
 .verification_cols <- function(project=NULL) {
   cs <- list(
+    "processing_output_id" = "character",
+    "identified_name" = "factor",
+    "original_tvk" = "factor",
     "sample_id" = "character",
-    "submission_id" = "character",
     "survey_id" = "character",
-    "sample_start_datetime" = "POSIXct",
-    "sample_end_datetime" = "POSIXct",
-    "submission_datetime" = "POSIXct",
-    "first_name" = "character",
-    "last_name" = "character",
-    "group_name" = "character",
-    "sample_observers_type" = "character",
-    "sample_observers_number" = "numeric"
+    "verification_id" = "character",
+    "created_datetime" = "POSIXct",
+    "active" = "factor",
+    "verified_by" = "factor",
+    "observation_count" = "numeric",
+    "taxon_version_key" = "character",
+    "level_1_status" = "character",
+    "level_2_status" = "character",
+    "taxon_hierarchy_species" = "character",
+    "taxon_hierarchy_genus" = "character",
+    "taxon_hierarchy_family" = "character",
+    "taxon_hierarchy_superfamily" = "character",
+    "taxon_hierarchy_infraorder" = "character",
+    "taxon_hierarchy_order" = "character",
+    "taxon_hierarchy_class" = "character",
+    "taxon_hierarchy_subphylum" = "character",
+    "taxon_hierarchy_phylum"  = "character",
+    "taxon_hierarchy_kingdom" = "character",
+    "taxon_hierarchy_suborder"  = "character",
+    "taxon_hierarchy_super_class" = "character"
   )
   if (is.null(project)) {
     return(cs)
