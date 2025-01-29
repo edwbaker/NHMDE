@@ -239,7 +239,7 @@ nature_overheard_get_verified_samples <- function(samples, verifications) {
       if (length(temp) == 0) {
         value <- 0
       } else {
-        value <- sum(as.numeric(temp))
+        value <- sum(as.numeric(temp)) + samples[samples$sample_id == sample_id, paste(taxon, "Correct", sep="_")]
       }
       samples[samples$sample_id == sample_id, paste(taxon, "Correct", sep="_")] <- value
 
@@ -247,7 +247,7 @@ nature_overheard_get_verified_samples <- function(samples, verifications) {
       if (length(temp) == 0) {
         value <- 0
       } else {
-        value <- sum(as.numeric(temp))
+        value <- sum(as.numeric(temp)) + samples[samples$sample_id == sample_id, paste(taxon, "Considered_Correct", sep="_")]
       }
       samples[samples$sample_id == sample_id, paste(taxon, "Considered_Correct", sep="_")] <- value
 
@@ -255,7 +255,7 @@ nature_overheard_get_verified_samples <- function(samples, verifications) {
       if (length(temp) == 0) {
         value <- 0
       } else {
-        value <- sum(as.numeric(temp))
+        value <- sum(as.numeric(temp)) + samples[samples$sample_id == sample_id, paste(taxon, "Incorrect", sep="_")]
       }
       samples[samples$sample_id == sample_id, paste(taxon, "Incorrect", sep="_")] <- value
 
@@ -263,7 +263,7 @@ nature_overheard_get_verified_samples <- function(samples, verifications) {
       if (length(temp) == 0) {
         value <- 0
       } else {
-        value <- sum(as.numeric(temp))
+        value <- sum(as.numeric(temp)) + samples[samples$sample_id == sample_id, paste(taxon, "Unable_to_Verify", sep="_")]
       }
       samples[samples$sample_id == sample_id, paste(taxon, "Unable_to_Verify", sep="_")] <- value
     }
