@@ -10,18 +10,19 @@
 #' @return A numeric vector of the same length as the input data.
 #' @importFrom pracma savgol
 sensors_kernel_min_max <- function(data, n=60, mode="max") {
-  if (mode=="min") {
-    return(sensors_kernel_max_min(max(data)-data, n=n))
+  if (mode == "min") {
+    return(sensors_kernel_min_max(max(data) - data, n = n))
   }
-  data <- savgol(data, fl=3, forder=2, dorder=0)
+  data <- pracma::savgol(data, fl=n+1, forder=3, dorder=0)
+  n <- 60
   l <- length(data)
   v <- rep(0, n/2)
   for (i in ((n/2)+1):(length(data)-(n/2))) {
     w <- 0
-    if (data[i-(n/2)] < data[i] & data[i] > data[1+(n/2)]) {
+    if (data[i-(n/2)] <= data[i] & data[i] >= data[i+(n/2)]) {
       for (p in c((i-(n/2)):(i-1),(i+1):(i+(n/2)))) {
-        if (data[p] < data[i]) {
-          w <- w + 1
+        if (data[p] <= data[i]) {
+          w <- w + abs(data[i])
         }
       }
     }
