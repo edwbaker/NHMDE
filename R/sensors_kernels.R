@@ -6,9 +6,13 @@
 #'
 #' @param data A numeric vector of data to be processed.
 #' @param n An integer specifying the size of the kernel. Default is 60.
+#' @param mode A character string specifying the mode of operation (max or min).
 #' @return A numeric vector of the same length as the input data.
 #' @importFrom pracma savgol
-sensors_kernel_max <- function(data, n=60) {
+sensors_kernel_min_max <- function(data, n=60, mode="max") {
+  if (mode=="min") {
+    return(sensors_kernel_max_min(max(data)-data, n=n))
+  }
   data <- savgol(data, fl=3, forder=2, dorder=0)
   l <- length(data)
   v <- rep(0, n/2)
