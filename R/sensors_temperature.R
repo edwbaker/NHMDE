@@ -9,6 +9,7 @@
 #' @param plot Logical value indicating whether to plot the delta T values.
 #' @return The accumulated degree days (ADD) value.
 #' @importFrom graphics boxplot
+#' @export
 AccDD <- function(timestamp, temperature, baseline=10, name="", plot=F) {
   deltaT <- diff(as.numeric(timestamp))
 

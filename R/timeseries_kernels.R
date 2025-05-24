@@ -1,4 +1,4 @@
-#' Apply maximum kernel to data
+#' Apply maximum/minimum kernel to data
 #'
 #' This function applies a maximum kernel to the data. It uses a
 #' Savitzky-Golay filter to smooth the data and then applies a kernel
@@ -9,11 +9,12 @@
 #' @param mode A character string specifying the mode of operation (max or min).
 #' @return A numeric vector of the same length as the input data.
 #' @importFrom pracma savgol
-sensors_kernel_min_max <- function(data, n=60, mode="max") {
+#' @export
+ts_kernel_min_max <- function(data, n=60, mode="max") {
   if (mode == "min") {
-    return(sensors_kernel_min_max(max(data) - data, n = n))
+    return(ts_kernel_min_max(max(data) - data, n = n))
   }
-  data <- pracma::savgol(data, fl=n+1, forder=3, dorder=0)
+  data <- savgol(data, fl=n+1, forder=3, dorder=0)
   n <- 60
   l <- length(data)
   v <- rep(0, n/2)
