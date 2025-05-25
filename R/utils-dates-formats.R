@@ -5,8 +5,11 @@
 #' @return A character string in the format "YYYY-DDD".
 #' @importFrom lubridate year yday
 #' @export
-tf_year_day <- function(date) {
-  return(paste(year(date),yday(date), sep="-"))
+tf_unix_day <- function(date) {
+  second(date) <- 0
+  minute(date) <- 0
+  hour(date) <- 0
+  return(floor(as.numeric(date) / 86400))
 }
 
 #' Get the number of seconds into that day from a date object
