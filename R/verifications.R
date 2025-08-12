@@ -67,14 +67,14 @@ verifications_get_data <- function(file, project=NULL) {
     "taxon_hierarchy_genus" = "character",
     "taxon_hierarchy_family" = "character",
     "taxon_hierarchy_superfamily" = "character",
-    "taxon_hierarchy_infraorder" = "character",
+#    "taxon_hierarchy_infraorder" = "character",
     "taxon_hierarchy_order" = "character",
     "taxon_hierarchy_class" = "character",
     "taxon_hierarchy_subphylum" = "character",
     "taxon_hierarchy_phylum"  = "character",
     "taxon_hierarchy_kingdom" = "character",
-    "taxon_hierarchy_suborder"  = "character",
-    "taxon_hierarchy_super_class" = "character"
+    "taxon_hierarchy_suborder"  = "character"
+#    "taxon_hierarchy_super_class" = "character"
   )
   if (is.null(project)) {
     return(cs)
