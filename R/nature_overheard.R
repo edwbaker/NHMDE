@@ -204,7 +204,7 @@ nature_overheard_taxa <- function() {
 #' @return A data frame: samples data with the verifications data summarised
 #' @export
 nature_overheard_get_verified_samples <- function(samples, verifications) {
-  verifications <- verifications[verifications$active=="TRUE",]
+  verifications <- verifications[verifications$active=="true",]
   verifications$identified_name <- tolower(verifications$identified_name)
 
   prototype_v <- vector(mode="numeric", length=nrow(samples))
