@@ -15,13 +15,13 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 Imports:
     forcats,
+    jsonlite,
     lubridate,
     methods,
     openssl,
     pracma,
     rjson,
-    sonicscrewdriver,
-    tidyjson
+    sonicscrewdriver
 Suggests: 
     spelling,
     testthat (>= 3.0.0)

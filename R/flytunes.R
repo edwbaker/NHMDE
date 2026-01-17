@@ -2,10 +2,10 @@
 #'
 #' @param data A data frame from read.csv of classification csv
 #' @return A data frame with processed data
-#' @importFrom tidyjson spread_all
+#' @importFrom jsonlite fromJSON
 #' @export
 flytunes_process_zooniverse <- function(data) {
-  metadata <- as.data.frame(spread_all(data$metadata))
+  metadata <- as.data.frame(do.call(rbind, lapply(data$metadata, function(x) jsonlite::fromJSON(x))))
   annotations <- .flytunes_annotations(data$annotations)
   subject_data <- .flytunes_subject_data(data$subject_data)
 

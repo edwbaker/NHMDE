@@ -84,9 +84,10 @@ daily_extremes_stats <- function(daily_extremes) {
                    max=max,
                    max_t=max_t,
                    range=max-min,
-                   min_p= (min_t - u_day*86400)/86400,
-                   max_p= (max_t - u_day*86400)/86400,
-                   range_p= (max_t - min_t)/86400
+                   min_p=(min_t - u_day*86400)/86400,
+                   max_p=(max_t - u_day*86400)/86400,
+                   range_p=(max_t - min_t)/86400,
+                   AccD_10=max((max+min)/2-10, 0)
                  ))
   }
   return(ret)
