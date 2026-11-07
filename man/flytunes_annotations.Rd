@@ -13,5 +13,7 @@ flytunes_annotations(data)
 A list of sonicscrewdriver annotation objects
 }
 \description{
-Get sonicscrewdriver annotation objects from FlyTunes data
+Each annotation is credited, as its \code{identifiedBy}, to the Zooniverse
+volunteer who made the classification, and dated, as its \code{dateIdentified},
+to when the classification was made. Its \code{source} is \code{"Zooniverse"}.
 }

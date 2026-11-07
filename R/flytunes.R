@@ -131,6 +131,10 @@ flytunes_short_names <- function() {
 
 #' Get sonicscrewdriver annotation objects from FlyTunes data
 #'
+#' Each annotation is credited, as its `identifiedBy`, to the Zooniverse
+#' volunteer who made the classification, and dated, as its `dateIdentified`,
+#' to when the classification was made. Its `source` is `"Zooniverse"`.
+#'
 #' @param data A data frame from `flytunes_process_zooniverse()`
 #' @return A list of sonicscrewdriver annotation objects
 #' @export
@@ -139,6 +143,7 @@ flytunes_annotations <- function(data) {
   n_max <- sum(colSums(data[, colnames(data) %in% .flytunes_list_annotations()]))
   n <- 1
   annotations <- vector(mode="list", length=n_max)
+  when <- if ("created_at" %in% colnames(data)) data$created_at else rep(NA, nrow(data))
   for (i in 1:nrow(data)) {
     for (j in 1:length(.flytunes_list_annotations())) {
       if (data[i, .flytunes_list_annotations()[j]] == TRUE) {
@@ -150,13 +155,34 @@ flytunes_annotations <- function(data) {
           ),
           start = data[i, "segment.number"] * data[i, "segment.length"] + data[i, "subject.offset"],
           end = (data[i, "segment.number"] + 1) * data[i, "segment.length"] + data[i, "subject.offset"],
-          source = data[i, "user_name"],
+          source = "Zooniverse",
           type = "FlyTunes",
-          value = .flytunes_list_annotations()[j]
+          value = .flytunes_list_annotations()[j],
+          identifiedBy = data[i, "user_name"],
+          dateIdentified = .flytunes_time(when[i])
         )
         n <- n+1
       }
     }
   }
   return(annotations)
+}
+
+#' When a Zooniverse classification was made
+#'
+#' Zooniverse exports give it as `2023-06-14 09:27:32 UTC`, which is read as a
+#' time in UTC. A time in any other form is kept as the export gives it.
+#' @param x The `created_at` of a classification, or NA.
+#' @return A time, or text.
+#' @noRd
+.flytunes_time <- function(x) {
+  x <- as.character(x)
+  if (is.na(x) || !nzchar(x)) {
+    return("")
+  }
+  t <- as.POSIXct(sub(" UTC$", "", x), tz="UTC", format="%Y-%m-%d %H:%M:%S")
+  if (is.na(t)) {
+    return(as.character(x))
+  }
+  return(t)
 }
